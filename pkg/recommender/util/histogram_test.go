@@ -20,8 +20,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stretchr/testify/assert"
 	vpa_types "kubedb.dev/apimachinery/apis/autoscaling/v1alpha1"
+
+	"github.com/stretchr/testify/assert"
 )
 
 var (

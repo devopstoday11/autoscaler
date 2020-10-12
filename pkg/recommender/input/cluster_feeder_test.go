@@ -20,18 +20,18 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/golang/mock/gomock"
-	"github.com/stretchr/testify/assert"
-
-	autoscalingv1 "k8s.io/api/autoscaling/v1"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/labels"
 	vpa_types "kubedb.dev/apimachinery/apis/autoscaling/v1alpha1"
 	controllerfetcher "kubedb.dev/autoscaler/pkg/recommender/input/controller_fetcher"
 	"kubedb.dev/autoscaler/pkg/recommender/input/spec"
 	"kubedb.dev/autoscaler/pkg/recommender/model"
 	target_mock "kubedb.dev/autoscaler/pkg/target/mock"
 	"kubedb.dev/autoscaler/pkg/utils/test"
+
+	"github.com/golang/mock/gomock"
+	"github.com/stretchr/testify/assert"
+	autoscalingv1 "k8s.io/api/autoscaling/v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/labels"
 )
 
 type fakeControllerFetcher struct {

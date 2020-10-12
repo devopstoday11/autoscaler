@@ -20,7 +20,6 @@ import (
 	"flag"
 	"time"
 
-	apiv1 "k8s.io/api/core/v1"
 	"kubedb.dev/autoscaler/common"
 	"kubedb.dev/autoscaler/pkg/recommender/input/history"
 	"kubedb.dev/autoscaler/pkg/recommender/model"
@@ -28,6 +27,8 @@ import (
 	"kubedb.dev/autoscaler/pkg/utils/metrics"
 	metrics_quality "kubedb.dev/autoscaler/pkg/utils/metrics/quality"
 	metrics_recommender "kubedb.dev/autoscaler/pkg/utils/metrics/recommender"
+
+	core "k8s.io/api/core/v1"
 	"k8s.io/client-go/rest"
 	kube_flag "k8s.io/component-base/cli/flag"
 	"k8s.io/klog"
@@ -54,7 +55,7 @@ var (
 	ctrNamespaceLabel   = flag.String("container-namespace-label", "namespace", `Label name to look for container names`)
 	ctrPodNameLabel     = flag.String("container-pod-name-label", "pod_name", `Label name to look for container names`)
 	ctrNameLabel        = flag.String("container-name-label", "name", `Label name to look for container names`)
-	vpaObjectNamespace  = flag.String("vpa-object-namespace", apiv1.NamespaceAll, "Namespace to search for VPA objects and pod stats. Empty means all namespaces will be used.")
+	vpaObjectNamespace  = flag.String("vpa-object-namespace", core.NamespaceAll, "Namespace to search for VPA objects and pod stats. Empty means all namespaces will be used.")
 )
 
 // Aggregation configuration flags

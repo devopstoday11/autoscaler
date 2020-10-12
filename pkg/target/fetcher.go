@@ -21,16 +21,17 @@ import (
 	"fmt"
 	"time"
 
-	appsv1 "k8s.io/api/apps/v1"
+	vpa_types "kubedb.dev/apimachinery/apis/autoscaling/v1alpha1"
+
+	apps "k8s.io/api/apps/v1"
 	batchv1 "k8s.io/api/batch/v1"
 	batchv1beta1 "k8s.io/api/batch/v1beta1"
-	corev1 "k8s.io/api/core/v1"
+	core "k8s.io/api/core/v1"
 	apimeta "k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/util/wait"
-	vpa_types "kubedb.dev/apimachinery/apis/autoscaling/v1alpha1"
 	"k8s.io/client-go/discovery"
 	cacheddiscovery "k8s.io/client-go/discovery/cached"
 	"k8s.io/client-go/dynamic"
@@ -154,26 +155,26 @@ func getLabelSelector(informer cache.SharedIndexInformer, kind, namespace, name 
 		return nil, fmt.Errorf("%s %s/%s does not exist", kind, namespace, name)
 	}
 	switch obj.(type) {
-	case (*appsv1.DaemonSet):
-		apiObj, ok := obj.(*appsv1.DaemonSet)
+	case (*apps.DaemonSet):
+		apiObj, ok := obj.(*apps.DaemonSet)
 		if !ok {
 			return nil, fmt.Errorf("Failed to parse %s %s/%s", kind, namespace, name)
 		}
 		return metav1.LabelSelectorAsSelector(apiObj.Spec.Selector)
-	case (*appsv1.Deployment):
-		apiObj, ok := obj.(*appsv1.Deployment)
+	case (*apps.Deployment):
+		apiObj, ok := obj.(*apps.Deployment)
 		if !ok {
 			return nil, fmt.Errorf("Failed to parse %s %s/%s", kind, namespace, name)
 		}
 		return metav1.LabelSelectorAsSelector(apiObj.Spec.Selector)
-	case (*appsv1.StatefulSet):
-		apiObj, ok := obj.(*appsv1.StatefulSet)
+	case (*apps.StatefulSet):
+		apiObj, ok := obj.(*apps.StatefulSet)
 		if !ok {
 			return nil, fmt.Errorf("Failed to parse %s %s/%s", kind, namespace, name)
 		}
 		return metav1.LabelSelectorAsSelector(apiObj.Spec.Selector)
-	case (*appsv1.ReplicaSet):
-		apiObj, ok := obj.(*appsv1.ReplicaSet)
+	case (*apps.ReplicaSet):
+		apiObj, ok := obj.(*apps.ReplicaSet)
 		if !ok {
 			return nil, fmt.Errorf("Failed to parse %s %s/%s", kind, namespace, name)
 		}
@@ -190,8 +191,8 @@ func getLabelSelector(informer cache.SharedIndexInformer, kind, namespace, name 
 			return nil, fmt.Errorf("Failed to parse %s %s/%s", kind, namespace, name)
 		}
 		return metav1.LabelSelectorAsSelector(metav1.SetAsLabelSelector(apiObj.Spec.JobTemplate.Spec.Template.Labels))
-	case (*corev1.ReplicationController):
-		apiObj, ok := obj.(*corev1.ReplicationController)
+	case (*core.ReplicationController):
+		apiObj, ok := obj.(*core.ReplicationController)
 		if !ok {
 			return nil, fmt.Errorf("Failed to parse %s %s/%s", kind, namespace, name)
 		}

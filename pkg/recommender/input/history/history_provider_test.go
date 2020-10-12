@@ -22,13 +22,13 @@ import (
 	"testing"
 	"time"
 
+	"kubedb.dev/autoscaler/pkg/recommender/model"
+
 	"github.com/prometheus/client_golang/api"
 	prometheusv1 "github.com/prometheus/client_golang/api/prometheus/v1"
 	prommodel "github.com/prometheus/common/model"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
-
-	"kubedb.dev/autoscaler/pkg/recommender/model"
 )
 
 const (

@@ -22,9 +22,8 @@ import (
 	"os"
 	"time"
 
-	apiv1 "k8s.io/api/core/v1"
-	"kubedb.dev/autoscaler/common"
 	vpa_clientset "kubedb.dev/apimachinery/client/clientset/versioned"
+	"kubedb.dev/autoscaler/common"
 	"kubedb.dev/autoscaler/pkg/target"
 	updater "kubedb.dev/autoscaler/pkg/updater/logic"
 	"kubedb.dev/autoscaler/pkg/updater/priority"
@@ -33,6 +32,8 @@ import (
 	metrics_updater "kubedb.dev/autoscaler/pkg/utils/metrics/updater"
 	"kubedb.dev/autoscaler/pkg/utils/status"
 	vpa_api_util "kubedb.dev/autoscaler/pkg/utils/vpa"
+
+	core "k8s.io/api/core/v1"
 	"k8s.io/client-go/informers"
 	kube_client "k8s.io/client-go/kubernetes"
 	kube_restclient "k8s.io/client-go/rest"
@@ -62,7 +63,7 @@ var (
 		"If true, updater will only evict pods when admission controller status is valid.")
 
 	namespace          = os.Getenv("NAMESPACE")
-	vpaObjectNamespace = flag.String("vpa-object-namespace", apiv1.NamespaceAll, "Namespace to search for VPA objects. Empty means all namespaces will be used.")
+	vpaObjectNamespace = flag.String("vpa-object-namespace", core.NamespaceAll, "Namespace to search for VPA objects. Empty means all namespaces will be used.")
 )
 
 const defaultResyncPeriod time.Duration = 10 * time.Minute

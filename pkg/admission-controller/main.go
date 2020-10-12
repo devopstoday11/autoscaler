@@ -19,25 +19,25 @@ package main
 import (
 	"flag"
 	"fmt"
-
 	"net/http"
 	"os"
 	"time"
 
-	apiv1 "k8s.io/api/core/v1"
+	vpa_clientset "kubedb.dev/apimachinery/client/clientset/versioned"
 	"kubedb.dev/autoscaler/common"
 	"kubedb.dev/autoscaler/pkg/admission-controller/logic"
 	"kubedb.dev/autoscaler/pkg/admission-controller/resource/pod"
 	"kubedb.dev/autoscaler/pkg/admission-controller/resource/pod/patch"
 	"kubedb.dev/autoscaler/pkg/admission-controller/resource/pod/recommendation"
 	"kubedb.dev/autoscaler/pkg/admission-controller/resource/vpa"
-	vpa_clientset "kubedb.dev/apimachinery/client/clientset/versioned"
 	"kubedb.dev/autoscaler/pkg/target"
 	"kubedb.dev/autoscaler/pkg/utils/limitrange"
 	"kubedb.dev/autoscaler/pkg/utils/metrics"
 	metrics_admission "kubedb.dev/autoscaler/pkg/utils/metrics/admission"
 	"kubedb.dev/autoscaler/pkg/utils/status"
 	vpa_api_util "kubedb.dev/autoscaler/pkg/utils/vpa"
+
+	core "k8s.io/api/core/v1"
 	"k8s.io/client-go/informers"
 	kube_client "k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
@@ -66,7 +66,7 @@ var (
 	webhookTimeout     = flag.Int("webhook-timeout-seconds", 30, "Timeout in seconds that the API server should wait for this webhook to respond before failing.")
 	registerWebhook    = flag.Bool("register-webhook", true, "If set to true, admission webhook object will be created on start up to register with the API server.")
 	registerByURL      = flag.Bool("register-by-url", false, "If set to true, admission webhook will be registered by URL (webhookAddress:webhookPort) instead of by service name")
-	vpaObjectNamespace = flag.String("vpa-object-namespace", apiv1.NamespaceAll, "Namespace to search for VPA objects. Empty means all namespaces will be used.")
+	vpaObjectNamespace = flag.String("vpa-object-namespace", core.NamespaceAll, "Namespace to search for VPA objects. Empty means all namespaces will be used.")
 )
 
 func main() {
